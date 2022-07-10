@@ -11,26 +11,26 @@ const App = () => {
   const aqi = ["Good 😃", "Fair 😉", "Moderate 😐", "Poor 😯", "Very Poor 😞"];
 
   // http://www.geoplugin.net/xml.gp?ip=76.109.14.196
+  // https://geolocation-db.com/json/
 
-  const getData = async () => {
-    const res = await axios.get("https://geolocation-db.com/json/");
-    // console.log(res.data);
-    const city = res.data.city;
-    const lat = res.data.latitude;
-    const lon = res.data.longitude;
-    setQuery(city);
-    fetchReport()
-  };
   
-  useEffect(() => {
-    getData();
-  }, []);
-  
-  window.onload = () => {
+  window.onload = async () => {
     var reloading = sessionStorage.getItem("reloading");
     if (reloading) {
       // sessionStorage.removeItem("reloading");
       fetchReport();
+    }
+    else {
+      const res = await axios.get("https://geolocation-db.com/json/");
+      const city = res.data.city;
+      const lat = res.data.latitude;
+      const lon = res.data.longitude;
+      setQuery(city);
+
+      sessionStorage.setItem("city", city);
+      sessionStorage.setItem("lat", lat);
+      sessionStorage.setItem("lon", lon);
+      fetchReport()
     }
   }
   
