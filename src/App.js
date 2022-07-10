@@ -72,7 +72,7 @@ const App = () => {
 
   return (
     <div className="main-container">
-      <p className="name">Your City Weather</p>
+      <p className="name">City Weather</p>
       <input
         type="text"
         className="search"
